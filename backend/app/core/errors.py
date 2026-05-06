@@ -49,7 +49,7 @@ def register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(RequestValidationError)
     async def handle_validation_error(_: Request, exc: RequestValidationError) -> JSONResponse:
         return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             content=_envelope("请求参数校验失败", code="validation_error")
             | {"errors": exc.errors()},
         )

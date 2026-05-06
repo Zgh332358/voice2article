@@ -27,10 +27,10 @@ class Settings(BaseSettings):
     step_llm_model: str = Field(default="step-2-16k")
     step_stt_model: str = Field(default="step-asr")
 
-    database_url: str = Field(default="")
+    database_url: str = Field(default="sqlite+aiosqlite:///./dev.db")
     redis_url: str = Field(default="")
 
-    jwt_secret: str = Field(default="change-me-in-production")
+    jwt_secret: str = Field(default="dev-only-secret-change-in-production-32b")
     jwt_algorithm: str = Field(default="HS256")
     jwt_expire_minutes: int = Field(default=10080)
 
