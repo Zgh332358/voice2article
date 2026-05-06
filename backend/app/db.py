@@ -5,14 +5,15 @@
 """
 
 from collections.abc import AsyncIterator
+from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.config import settings
 
 
-def _build_engine_kwargs() -> dict:
-    kwargs: dict = {"echo": False, "pool_pre_ping": True}
+def _build_engine_kwargs() -> dict[str, Any]:
+    kwargs: dict[str, Any] = {"echo": False, "pool_pre_ping": True}
     # SQLite 不支持连接池配置项，按 URL 区分
     if settings.database_url.startswith("sqlite"):
         kwargs["echo"] = False

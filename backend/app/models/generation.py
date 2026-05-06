@@ -1,7 +1,7 @@
 """Generation 模型 —— 对应 PRD §6.1.4。"""
 
-import enum
 from datetime import datetime
+from enum import StrEnum
 from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
@@ -15,13 +15,13 @@ if TYPE_CHECKING:
     from app.models.user import User
 
 
-class GenerationMode(str, enum.Enum):
+class GenerationMode(StrEnum):
     DIALOGUE = "dialogue"
     DOCUMENT = "document"
     HYBRID = "hybrid"
 
 
-class GenerationStatus(str, enum.Enum):
+class GenerationStatus(StrEnum):
     DRAFT = "draft"
     PUBLISHED = "published"
     DELETED = "deleted"

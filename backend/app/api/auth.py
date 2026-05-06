@@ -13,12 +13,12 @@ from app.schemas import TokenResponse, UserCreate, UserLogin, UserOut
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-class EmailAlreadyExists(AppError):
+class EmailAlreadyExistsError(AppError):
     status_code = status.HTTP_409_CONFLICT
     code = "email_exists"
 
 
-class InvalidCredentials(AppError):
+class InvalidCredentialsError(AppError):
     status_code = status.HTTP_401_UNAUTHORIZED
     code = "invalid_credentials"
 
@@ -41,7 +41,7 @@ def _build_token_response(user: User) -> TokenResponse:
 async def register(payload: UserCreate, db: DbSession) -> TokenResponse:
     existing = await db.scalar(select(User).where(User.email == payload.email))
     if existing is not None:
-        raise EmailAlreadyExists("该邮箱已注册")
+        raise EmailAlreadyExistsError("该邮箱已注册")
 
     user = User(
         email=payload.email,
@@ -58,7 +58,7 @@ async def register(payload: UserCreate, db: DbSession) -> TokenResponse:
 async def login(payload: UserLogin, db: DbSession) -> TokenResponse:
     user = await db.scalar(select(User).where(User.email == payload.email))
     if user is None or not verify_password(payload.password, user.password_hash):
-        raise InvalidCredentials("邮箱或密码错误")
+        raise InvalidCredentialsError("邮箱或密码错误")
     return _build_token_response(user)
 
 

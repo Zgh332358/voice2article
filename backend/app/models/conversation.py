@@ -1,6 +1,6 @@
 """Conversation 与 Message 模型 —— 对应 PRD §6.1.3。"""
 
-import enum
+from enum import StrEnum
 from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
@@ -19,13 +19,13 @@ if TYPE_CHECKING:
 JsonType = JSON().with_variant(JSONB, "postgresql")
 
 
-class ConversationMode(str, enum.Enum):
+class ConversationMode(StrEnum):
     DIALOGUE = "dialogue"
     DOCUMENT = "document"
     HYBRID = "hybrid"
 
 
-class MessageRole(str, enum.Enum):
+class MessageRole(StrEnum):
     USER = "user"
     ASSISTANT = "assistant"
     SYSTEM = "system"
