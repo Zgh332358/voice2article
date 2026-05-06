@@ -18,10 +18,9 @@ const SIDER_WIDTH = 220;
 const menuItems: MenuProps["items"] = [
   { key: "/", icon: <HomeOutlined />, label: <Link to="/">首页</Link> },
   {
-    key: "conversations",
+    key: "/conversations",
     icon: <MessageOutlined />,
-    label: "对话创作",
-    disabled: true,
+    label: <Link to="/conversations">对话创作</Link>,
   },
   {
     key: "documents",

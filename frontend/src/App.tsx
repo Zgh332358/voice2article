@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
+import Conversations from "@/pages/Conversations";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
@@ -20,6 +21,7 @@ function App() {
         }
       >
         <Route path="/" element={<Home />} />
+        <Route path="/conversations" element={<Conversations />} />
         {/* 未匹配路径：登录态下显示 404 页面 */}
         <Route path="*" element={<NotFound />} />
       </Route>
