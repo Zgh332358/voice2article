@@ -1,0 +1,62 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+.coverage.*
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.next/
+.cache/
+coverage/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Build outputs
+backend/dist/
+frontend/dist/
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Logs
+logs/
+*.log
+
+# OS
+Thumbs.db
+
+# Audio uploads (dev artifacts)
+backend/uploads/
+backend/storage/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
