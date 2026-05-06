@@ -13,7 +13,7 @@ export async function register(payload: {
   password: string;
   nickname?: string;
 }): Promise<TokenResponse> {
-  const { data } = await api.post<TokenResponse>("/auth/register", payload);
+  const { data } = await api.post<TokenResponse>("/auth/register", payload, { silent: true });
   return data;
 }
 
@@ -21,7 +21,7 @@ export async function login(payload: {
   email: string;
   password: string;
 }): Promise<TokenResponse> {
-  const { data } = await api.post<TokenResponse>("/auth/login", payload);
+  const { data } = await api.post<TokenResponse>("/auth/login", payload, { silent: true });
   return data;
 }
 

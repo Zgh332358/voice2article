@@ -33,6 +33,7 @@ build/
 .cache/
 coverage/
 *.log
+*.tsbuildinfo
 npm-debug.log*
 pnpm-debug.log*
 
