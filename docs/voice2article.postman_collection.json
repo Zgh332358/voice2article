@@ -1,12 +1,13 @@
 {
   "info": {
     "name": "voice2article API",
-    "description": "MVP W1 Day 5-7 联调集合。导入后请先在 Variables 里设置 baseUrl，运行 Auth/Login 后 accessToken 会自动写回。",
+    "description": "MVP W1-W2 联调集合。导入后请先在 Variables 里设置 baseUrl，运行 Auth/Register 或 Auth/Login 后 accessToken 会自动写回。Conversations 相关请求会用最近一次创建的 {{conversationId}}。",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     { "key": "baseUrl", "value": "http://localhost:8000/api/v1", "type": "string" },
-    { "key": "accessToken", "value": "", "type": "string" }
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "conversationId", "value": "", "type": "string" }
   ],
   "auth": {
     "type": "bearer",
@@ -109,6 +110,139 @@
               "raw": "{{baseUrl}}/auth/me",
               "host": ["{{baseUrl}}"],
               "path": ["auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "STT",
+      "item": [
+        {
+          "name": "POST /stt/transcribe",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "",
+                  "description": "选择本地音频文件（wav/mp3/m4a/aiff/ogg/webm/flac），≤25MB"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stt/transcribe",
+              "host": ["{{baseUrl}}"],
+              "path": ["stt", "transcribe"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Conversations",
+      "item": [
+        {
+          "name": "POST /conversations",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    pm.collectionVariables.set('conversationId', body.id);",
+                  "    pm.test('conversationId saved', function () { pm.expect(body.id).to.be.a('string'); });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"评测 Step-2 长文本\",\n  \"mode\": \"dialogue\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/conversations",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations"]
+            }
+          }
+        },
+        {
+          "name": "GET /conversations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/conversations?limit=50&offset=0",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations"],
+              "query": [
+                { "key": "limit", "value": "50" },
+                { "key": "offset", "value": "0" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /conversations/{id}",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/conversations/{{conversationId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations", "{{conversationId}}"]
+            }
+          }
+        },
+        {
+          "name": "PATCH /conversations/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"更新后的标题\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/conversations/{{conversationId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations", "{{conversationId}}"]
+            }
+          }
+        },
+        {
+          "name": "POST /conversations/{id}/messages",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"user\",\n  \"content\": \"今天我们要写一篇关于 Step-2 的评测\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/conversations/{{conversationId}}/messages",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations", "{{conversationId}}", "messages"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /conversations/{id}",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/conversations/{{conversationId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations", "{{conversationId}}"]
             }
           }
         }
