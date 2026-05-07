@@ -4,6 +4,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import Conversations from "@/pages/Conversations";
+import History from "@/pages/History";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
@@ -22,6 +23,7 @@ function App() {
       >
         <Route path="/" element={<Home />} />
         <Route path="/conversations" element={<Conversations />} />
+        <Route path="/history" element={<History />} />
         {/* 未匹配路径：登录态下显示 404 页面 */}
         <Route path="*" element={<NotFound />} />
       </Route>

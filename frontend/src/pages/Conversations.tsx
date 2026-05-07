@@ -16,6 +16,7 @@ import {
 
 import AudioFileUploader from "@/components/AudioFileUploader";
 import AudioRecorder from "@/components/AudioRecorder";
+import GenerationPanel from "@/components/GenerationPanel";
 import { notify } from "@/services/notify";
 import {
   type Conversation,
@@ -263,6 +264,8 @@ function Conversations() {
               ]}
             />
           </Card>
+
+          <GenerationPanel conversationId={activeId} />
         </div>
       </div>
     </div>

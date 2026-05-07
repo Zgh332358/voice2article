@@ -29,10 +29,9 @@ const menuItems: MenuProps["items"] = [
     disabled: true,
   },
   {
-    key: "history",
+    key: "/history",
     icon: <AppstoreOutlined />,
-    label: "生成历史",
-    disabled: true,
+    label: <Link to="/history">生成历史</Link>,
   },
 ];
 
