@@ -9,6 +9,7 @@ from app.schemas.conversation import (
     MessageCreate,
     MessageOut,
 )
+from app.schemas.formatting import FormatRequest, FormatResponse, TemplateInfo, TemplateList
 from app.schemas.generation import GenerationCreate, GenerationList, GenerationOut
 from app.schemas.stt import TranscribeResponse
 from app.schemas.user import TokenResponse, UserCreate, UserLogin, UserOut
@@ -19,11 +20,15 @@ __all__ = [
     "ConversationList",
     "ConversationOut",
     "ConversationUpdate",
+    "FormatRequest",
+    "FormatResponse",
     "GenerationCreate",
     "GenerationList",
     "GenerationOut",
     "MessageCreate",
     "MessageOut",
+    "TemplateInfo",
+    "TemplateList",
     "TokenResponse",
     "TranscribeResponse",
     "UserCreate",

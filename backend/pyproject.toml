@@ -17,6 +17,7 @@ dependencies = [
     "pyjwt>=2.10",
     "email-validator>=2.2",
     "aiosqlite>=0.20",
+    "markdown-it-py>=3",
 ]
 
 [dependency-groups]
