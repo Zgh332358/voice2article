@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
-import { ThunderboltOutlined } from "@ant-design/icons";
+import { FormatPainterOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import { Alert, Button, Card, Input, Select, Space, Tag, Typography } from "antd";
 
+import FormatModal from "@/components/FormatModal";
 import { notify } from "@/services/notify";
 import {
   type Generation,
@@ -34,6 +35,7 @@ function GenerationPanel({ conversationId, onCompleted }: GenerationPanelProps) 
   const [streamed, setStreamed] = useState("");
   const [meta, setMeta] = useState<Pick<Generation, "id" | "title" | "word_count"> | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [formatOpen, setFormatOpen] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
   const disabled = !conversationId || streaming;
@@ -172,12 +174,23 @@ function GenerationPanel({ conversationId, onCompleted }: GenerationPanelProps) 
             }
             extra={
               streamed && (
-                <Button
-                  size="small"
-                  onClick={() => navigator.clipboard.writeText(streamed)}
-                >
-                  复制
-                </Button>
+                <Space>
+                  <Button
+                    size="small"
+                    icon={<FormatPainterOutlined />}
+                    type="primary"
+                    disabled={streaming}
+                    onClick={() => setFormatOpen(true)}
+                  >
+                    一键排版
+                  </Button>
+                  <Button
+                    size="small"
+                    onClick={() => navigator.clipboard.writeText(streamed)}
+                  >
+                    复制
+                  </Button>
+                </Space>
               )
             }
           >
@@ -194,6 +207,13 @@ function GenerationPanel({ conversationId, onCompleted }: GenerationPanelProps) 
           </Card>
         )}
       </Space>
+
+      <FormatModal
+        open={formatOpen}
+        onClose={() => setFormatOpen(false)}
+        content={streamed}
+        title={meta?.title ?? null}
+      />
     </Card>
   );
 }

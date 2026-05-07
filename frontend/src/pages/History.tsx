@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CopyOutlined } from "@ant-design/icons";
+import { CopyOutlined, FormatPainterOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -12,6 +12,7 @@ import {
   Typography,
 } from "antd";
 
+import FormatModal from "@/components/FormatModal";
 import { notify } from "@/services/notify";
 import {
   type Generation,
@@ -33,6 +34,7 @@ function HistoryPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [openDetail, setOpenDetail] = useState<Generation | null>(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const [formatOpen, setFormatOpen] = useState(false);
 
   const refresh = async () => {
     setLoading(true);
@@ -154,6 +156,14 @@ function HistoryPage() {
               >
                 复制全文
               </Button>
+              <Button
+                size="small"
+                type="primary"
+                icon={<FormatPainterOutlined />}
+                onClick={() => setFormatOpen(true)}
+              >
+                一键排版
+              </Button>
             </Space>
             <Paragraph
               style={{
@@ -172,6 +182,15 @@ function HistoryPage() {
           <Empty description="加载失败" />
         )}
       </Modal>
+
+      {openDetail && (
+        <FormatModal
+          open={formatOpen}
+          onClose={() => setFormatOpen(false)}
+          content={openDetail.generated_content || ""}
+          title={openDetail.title}
+        />
+      )}
     </Space>
   );
 }
