@@ -64,3 +64,6 @@ backend/storage/
 
 # Eval reports（每次跑 scripts/eval-prompts.py 都会写新文件）
 docs/prompt-eval-*.md
+
+# Demo 启停脚本运行时数据
+.demo/
