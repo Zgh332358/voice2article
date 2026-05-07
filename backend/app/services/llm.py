@@ -93,7 +93,8 @@ class StepLLMClient:
             messages, stream=False, temperature=temperature, max_tokens=max_tokens
         )
         try:
-            async with httpx.AsyncClient(timeout=self._timeout) as client:
+            # trust_env=False：直连，绕开 macOS 系统代理 / *_PROXY 环境变量
+            async with httpx.AsyncClient(timeout=self._timeout, trust_env=False) as client:
                 resp = await client.post(url, headers=self._headers(), json=payload)
         except httpx.RequestError as e:
             logger.error("Step LLM 网络错误: %s", e)
@@ -126,8 +127,10 @@ class StepLLMClient:
         )
 
         try:
-            # 双层 async with 在 async generator 里语义更稳，不合并
-            async with httpx.AsyncClient(timeout=self._timeout) as client:  # noqa: SIM117
+            # 双层 async with 在 async generator 里语义更稳，不合并；trust_env=False 绕开系统代理
+            async with httpx.AsyncClient(  # noqa: SIM117
+                timeout=self._timeout, trust_env=False
+            ) as client:
                 async with client.stream(
                     "POST", url, headers=self._headers(), json=payload
                 ) as resp:

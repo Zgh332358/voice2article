@@ -61,3 +61,6 @@ backend/storage/
 *.sqlite
 *.sqlite3
 *.db
+
+# Eval reports（每次跑 scripts/eval-prompts.py 都会写新文件）
+docs/prompt-eval-*.md

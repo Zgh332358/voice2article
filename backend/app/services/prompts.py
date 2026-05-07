@@ -93,14 +93,23 @@ def build_title_extraction_messages(article: str) -> list[ChatMessage]:
 def split_title_and_body(generated: str) -> tuple[str, str]:
     """从 LLM 返回的整段文本里切出标题和正文。
 
-    约定：第一行是标题（含 # 等都剥掉），从第二行起是正文。
+    约定：第一行是标题（含 #、**、《》 都剥掉），从第二行起是正文。
     如果第一行包含正文味道很重（比如有句号），就保守地把 None 当标题，整段当正文。
     """
     lines = generated.lstrip("﻿").splitlines()
     if not lines:
         return "", ""
 
-    first = lines[0].strip().lstrip("#").strip().strip("《》").strip()
+    first = (
+        lines[0]
+        .strip()
+        .lstrip("#")
+        .strip()
+        .strip("*")
+        .strip()
+        .strip("《》")
+        .strip()
+    )
     rest = "\n".join(lines[1:]).strip()
 
     # 标题启发式：太长或包含完整句号视为正文一部分

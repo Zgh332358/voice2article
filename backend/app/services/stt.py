@@ -59,7 +59,8 @@ class StepASRClient:
         }
 
         try:
-            async with httpx.AsyncClient(timeout=self._timeout) as client:
+            # trust_env=False 绕开系统代理 / *_PROXY 环境变量
+            async with httpx.AsyncClient(timeout=self._timeout, trust_env=False) as client:
                 resp = await client.post(url, headers=headers, files=files)
         except httpx.RequestError as e:
             logger.error("Step ASR 网络错误: %s", e)
