@@ -60,6 +60,11 @@ BASE_URL="http://127.0.0.1:${BACKEND_PORT}/api/v1" \
 # 前端
 log "启动前端（${FRONTEND_PORT}）"
 cd "${PROJECT_ROOT}/frontend"
+# 自动写 .env.local，让 vite proxy 转到正确的后端端口
+cat > .env.local <<ENV
+# 由 scripts/demo-up.sh 自动生成，demo-down.sh 会清掉
+VITE_BACKEND_URL=http://127.0.0.1:${BACKEND_PORT}
+ENV
 nohup pnpm dev --port "${FRONTEND_PORT}" \
   > "${PID_DIR}/frontend.log" 2>&1 &
 echo $! > "${PID_DIR}/frontend.pid"

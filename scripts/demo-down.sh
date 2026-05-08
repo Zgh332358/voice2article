@@ -31,6 +31,9 @@ stop_one() {
 stop_one backend
 stop_one frontend
 
+# 清掉 demo-up 写的 vite 代理覆盖
+rm -f "${PROJECT_ROOT}/frontend/.env.local"
+
 # 注意：不做端口扫描兜底 —— 之前会误杀 8000 上别的 uvicorn 项目
 # 如果 backend.pid 丢了进程没关，手动 lsof -nP -iTCP:8000 -sTCP:LISTEN 看 PID 再 kill
 
